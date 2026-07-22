@@ -11,6 +11,10 @@
 #include <linux/ip.h> // Required for struct iphdr
 #include <linux/if_ether.h> // for strcut ethhdr 
 
+#include "ipv4.h"
+#include "protocol.h"
+#include "ethernet.h"
+
 #define BUFFER_SIZE 65536
 
 
@@ -20,7 +24,7 @@ struct Ethernet {
     unsigned char source[6];
     unsigned short protocol;
 };
-*/
+
 
 
 const char* get_the_type_of_protocol(unsigned short protocol){
@@ -124,7 +128,7 @@ void print_mac(const unsigned char* mac){
             mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]
         );
 }
-
+*/
 int main(){
     // Note: Running this requires sudo privileges (CAP_NET_RAW)
     int packet_socket = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
