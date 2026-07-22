@@ -1,7 +1,9 @@
 #include "ipv4.h"
 #include "protocol.h"
+#include "tcp.h"
 #include <linux/ip.h>
 #include <arpa/inet.h>
+#include <sys/types.h>
 #include <stdio.h>
 
 void parse_ipv4(const unsigned char* ip_buffer, size_t remaining_size) {
@@ -36,7 +38,7 @@ void parse_ipv4(const unsigned char* ip_buffer, size_t remaining_size) {
         return;
     }
 
-    unsigned short iphdr_len = iph->ihl * 4;
+    size_t iphdr_len = iph->ihl * 4;
 
     if (iphdr_len > remaining_size){
         printf("Incomplete IPv4 header\n");
@@ -47,10 +49,22 @@ void parse_ipv4(const unsigned char* ip_buffer, size_t remaining_size) {
 
     printf("   --- IPv4 Header ---\n");
     printf("   |- Version      : %d\n", iph->version);
-    printf("   |- Header Length: %d Bytes\n", iphdr_len);
+    printf("   |- Header Length: %zu Bytes\n", iphdr_len);
     printf("   |- Protocol     : %s\n", protocol_name);
     printf("   |- Total Length : %d Bytes\n", ntohs(iph->tot_len));
     printf("   |- TTL          : %d\n", iph->ttl);
     printf("   |- Source IP    : %s\n", src_ip);
     printf("   |- Destination  : %s\n", dest_ip);
+
+    if (iph->protocol == IPPROTO_TCP) {
+        parse_tcp(ip_buffer, iphdr_len, remaining_size);
+    }
+    /*
+    else if (iph->protocol == IPPROTO_UDP) {
+        
+    }
+    else if (iph->protocol == IPPROTO_ICMP) {
+
+    }
+    */
 }
