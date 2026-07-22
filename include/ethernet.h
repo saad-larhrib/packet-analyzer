@@ -5,5 +5,6 @@
 
 
 void print_mac(const unsigned char* mac);
+unsigned short parse_ethernet(const struct ethhdr* eth);
 
 #endif
