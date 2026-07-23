@@ -1,6 +1,8 @@
 #include "ipv4.h"
 #include "protocol.h"
 #include "tcp.h"
+#include "udp.h"
+#include "icmp.h"
 #include <linux/ip.h>
 #include <arpa/inet.h>
 #include <sys/types.h>
@@ -59,12 +61,13 @@ void parse_ipv4(const unsigned char* ip_buffer, size_t remaining_size) {
     if (iph->protocol == IPPROTO_TCP) {
         parse_tcp(ip_buffer, iphdr_len, remaining_size);
     }
-    /*
+    
     else if (iph->protocol == IPPROTO_UDP) {
-        
+      parse_udp(ip_buffer, iphdr_len, remaining_size);  
     }
-    else if (iph->protocol == IPPROTO_ICMP) {
 
+    else if (iph->protocol == IPPROTO_ICMP) {
+        parse_icmp(ip_buffer, iphdr_len, remaining_size);
     }
-    */
+
 }

@@ -24,7 +24,7 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
     unsigned short tcp_header_len = tcph->th_off * 4;
 
 
-    printf("================= TCP PACKET ===================\n");
+    printf("=================== TCP PACKET ===================\n");
     printf("Header Length                : %u Bytes\n", tcp_header_len);
     printf("Source Port                  : %u\n", source_port);
     printf("Destination Port             : %u\n", destination_port);
@@ -33,7 +33,7 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
     printf("Window Size                  : %u\n",ntohs(tcph->th_win));
     printf("CheckSum                     : 0x%04X\n", ntohs(tcph->th_sum));
     printf("Point Urgent                 : %u\n", ntohs(tcph->th_urp));
-    printf("Flags : \n");
+    printf("Flags :                      : ");
     if (tcph->th_flags & TH_SYN) printf("SYN ");
     if (tcph->th_flags & TH_ACK) printf("ACK ");
     if (tcph->th_flags & TH_FIN) printf("FIN ");
