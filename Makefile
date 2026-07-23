@@ -6,12 +6,22 @@ SRC = src/main.c \
       src/ethernet.c \
       src/ipv4.c \
       src/protocol.c \
-      src/tcp.c
+      src/tcp.c \
+      src/udp.c \
+      src/icmp.c \
+      src/dns.c
+
+OBJ = $(SRC:.c=.o)
 
 TARGET = packet-analyzer
 
-all:
-	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) $(OBJ) -o $(TARGET)
+
+src/%.o: src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(OBJ) $(TARGET)
