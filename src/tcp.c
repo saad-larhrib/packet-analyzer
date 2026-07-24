@@ -26,14 +26,46 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
 
     printf("=================== TCP PACKET ===================\n");
     printf("Header Length                : %u Bytes\n", tcp_header_len);
-    printf("Source Port                  : %u\n", source_port);
-    printf("Destination Port             : %u\n", destination_port);
+    /*80  -> HTTP
+    443 -> HTTPS
+    22  -> SSH
+    21  -> FTP
+    25  -> SMTP
+    53  -> DNS
+    110 -> POP3
+    143 -> IMAP*/
+    printf("Source Port                  : ");
+    switch(source_port){
+        case 80: printf("HTTP\n"); break;
+        case 443: printf("HTTPS\n"); break;
+        case 22: printf("SSH\n"); break;
+        case 21: printf("FTP\n"); break;
+        case 25: printf("SMTP\n"); break;
+        case 54: printf("DNS\n"); break;
+        case 110: printf("POP3\n"); break;
+        case 143: printf("IMAP\n"); break;
+        default: printf("%u\n", source_port); break;
+    }
+
+    printf("Destination Port             : ");
+    switch(destination_port){
+        case 80: printf("HTTP\n"); break;
+        case 443: printf("HTTPS\n"); break;
+        case 22: printf("SSH\n"); break;
+        case 21: printf("FTP\n"); break;
+        case 25: printf("SMTP\n"); break;
+        case 54: printf("DNS\n"); break;
+        case 110: printf("POP3\n"); break;
+        case 143: printf("IMAP\n"); break;
+        default: printf("%u\n", destination_port); break;
+    }
+
     printf("Sequence Number              : %u\n", seq_num);
     printf("Acknowledgement Number       : %u\n", ack_num);
     printf("Window Size                  : %u\n",ntohs(tcph->th_win));
     printf("CheckSum                     : 0x%04X\n", ntohs(tcph->th_sum));
     printf("Point Urgent                 : %u\n", ntohs(tcph->th_urp));
-    printf("Flags :                      : ");
+    printf("Flags                        : ");
     if (tcph->th_flags & TH_SYN) printf("SYN ");
     if (tcph->th_flags & TH_ACK) printf("ACK ");
     if (tcph->th_flags & TH_FIN) printf("FIN ");
