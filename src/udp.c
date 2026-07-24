@@ -32,7 +32,7 @@ void parse_udp(const unsigned char* ip_buffer, size_t iph_len, size_t remaining_
     printf("==================================================\n");
 
     if(src_port == 53|| dst_port == 53){
-        unsigned char* dns_pylod = ip_buffer + iph_len + sizeof(struct udphdr);
+        const unsigned char* dns_pylod = ip_buffer + iph_len + sizeof(struct udphdr);
         size_t dsn_size = remaining_size - iph_len - sizeof(struct udphdr);
 
         parse_dns(dns_pylod, dsn_size);

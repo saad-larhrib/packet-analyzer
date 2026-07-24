@@ -15,7 +15,7 @@ typedef struct {
 }dnshdr;
 
 
-void parse_dns(unsigned char* dns_payload, size_t dns_size){
+void parse_dns(const unsigned char* dns_payload, size_t dns_size){
     if(sizeof(dnshdr) > dns_size){
         printf("Incomplet DNS header\n");
         return;
