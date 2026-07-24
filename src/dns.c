@@ -28,8 +28,25 @@ void parse_dns(const unsigned char* dns_payload, size_t dns_size){
     printf("Flag                    : %u\n", ntohs(dns->flag));
     printf("Questions               : %u\n", ntohs(dns->qdcount));
     printf("Answers                 : %u\n", ntohs(dns->ancount));
-    printf("Num Authority RRS       :%u\n", ntohs(dns->num_authority_rrs));
+    printf("Num Authority RRS       : %u\n", ntohs(dns->num_authority_rrs));
     printf("Num Additional RRS      : %u\n",ntohs(dns->num_additional_rrs));
+    printf("Domain                  : ");
+
+    const unsigned char* question = dns_payload + sizeof(dnshdr);
+    unsigned char len = question[0];
+
+    while(*question != 0){
+        len = question[0];
+        for(int i = 1; i <= len; i++){
+            printf("%c", question[i]);
+        }
+        question += len + 1;
+        
+        if(*question != 0){
+            printf(".");
+        }   
+    }
+    printf("\n");
     printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
 
 }
