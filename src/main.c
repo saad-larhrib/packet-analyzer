@@ -36,9 +36,11 @@ int main(){
         if((size_t)packet_size < sizeof(struct ethhdr))
             continue;
 
-        const struct ethhdr* eth = (const struct ethhdr *)buffer; 
-        
+        const struct ethhdr* eth = (const struct ethhdr *)buffer;
+
         printf("Packet Size : %zd bytes\n", packet_size);
+        printf("\n");
+        printf("Ethernet\n");
 
         unsigned short ether_type = parse_ethernet(eth);
         
@@ -49,7 +51,7 @@ int main(){
             parse_ipv4(ip_payload, remaining_bytes);
         }
 
-        printf("-----------------------------------------\n");
+        printf("------------------------------------------------------------\n");
     }
 
     close(packet_socket);

@@ -24,8 +24,9 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
     unsigned short tcp_header_len = tcph->th_off * 4;
 
 
-    printf("=================== TCP PACKET ===================\n");
-    printf("Header Length                : %u Bytes\n", tcp_header_len);
+    printf("\n");
+    printf("TCP\n");
+    printf(" ├─ Header Length                : %u Bytes\n", tcp_header_len);
     /*80  -> HTTP
     443 -> HTTPS
     22  -> SSH
@@ -34,7 +35,7 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
     53  -> DNS
     110 -> POP3
     143 -> IMAP*/
-    printf("Source Port                  : ");
+    printf(" ├─ Source Port                  : ");
     switch(source_port){
         case 80: printf("HTTP\n"); break;
         case 443: printf("HTTPS\n"); break;
@@ -47,7 +48,7 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
         default: printf("%u\n", source_port); break;
     }
 
-    printf("Destination Port             : ");
+    printf(" ├─ Destination Port             : ");
     switch(destination_port){
         case 80: printf("HTTP\n"); break;
         case 443: printf("HTTPS\n"); break;
@@ -60,12 +61,12 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
         default: printf("%u\n", destination_port); break;
     }
 
-    printf("Sequence Number              : %u\n", seq_num);
-    printf("Acknowledgement Number       : %u\n", ack_num);
-    printf("Window Size                  : %u\n",ntohs(tcph->th_win));
-    printf("CheckSum                     : 0x%04X\n", ntohs(tcph->th_sum));
-    printf("Point Urgent                 : %u\n", ntohs(tcph->th_urp));
-    printf("Flags                        : ");
+    printf(" ├─ Sequence Number              : %u\n", seq_num);
+    printf(" ├─ Acknowledgement Number       : %u\n", ack_num);
+    printf(" ├─ Window Size                  : %u\n",ntohs(tcph->th_win));
+    printf(" ├─ CheckSum                     : 0x%04X\n", ntohs(tcph->th_sum));
+    printf(" ├─ Point Urgent                 : %u\n", ntohs(tcph->th_urp));
+    printf(" ├─ Flags                        : ");
     if (tcph->th_flags & TH_SYN) printf("SYN ");
     if (tcph->th_flags & TH_ACK) printf("ACK ");
     if (tcph->th_flags & TH_FIN) printf("FIN ");
@@ -73,6 +74,5 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
     if (tcph->th_flags & TH_PUSH) printf("PSH ");
     if (tcph->th_flags & TH_URG) printf("URG ");
     printf("\n");
-    printf("================================================\n");
 
 }

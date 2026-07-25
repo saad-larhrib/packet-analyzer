@@ -23,13 +23,13 @@ void parse_udp(const unsigned char* ip_buffer, size_t iph_len, size_t remaining_
     unsigned short udp_len  = ntohs(udph->uh_ulen);
 
     
-    
-    printf("=================== UDP PACKET ===================\n");
-    printf("Source Port                   : %u\n", src_port);
-    printf("Destination port              : %u \n", dst_port);
-    printf("UDP Length                    : %u\n", udp_len);
-    printf("Checksum                      : 0x%04X\n", ntohs(udph->uh_sum));
-    printf("==================================================\n");
+    printf("\n");
+    printf("UDP\n");
+    printf(" ├─ Source Port                   : %u\n", src_port);
+    printf(" ├─ Destination port              : %u \n", dst_port);
+    printf(" ├─ UDP Length                    : %u\n", udp_len);
+    printf(" ├─ Checksum                      : 0x%04X\n", ntohs(udph->uh_sum));
+    printf("\n");
 
     if(src_port == 53|| dst_port == 53){
         const unsigned char* dns_pylod = ip_buffer + iph_len + sizeof(struct udphdr);
