@@ -10,12 +10,17 @@
 #include "ethernet.h"
 #include "protocol.h"
 #include "ipv4.h"
+#include "ipv6.h"
+#include "filter.h"
 
 #define BUFFER_SIZE 65536
 #define RUN_FOREVER 1
 
 
-int main(){
+int main(int argc, char *argv[]){
+
+    parse_filter(argc, argv);
+
     // Note: Running this requires sudo privileges (CAP_NET_RAW)
     int packet_socket = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 
@@ -49,6 +54,11 @@ int main(){
             const unsigned char* ip_payload = buffer + sizeof(struct ethhdr);
             size_t remaining_bytes = packet_size - sizeof(struct ethhdr);
             parse_ipv4(ip_payload, remaining_bytes);
+
+        }else if (ether_type == ETH_P_IPV6){            
+            const unsigned char* ip_payload = buffer + sizeof(struct ethhdr);
+            size_t remaining_bytes = packet_size - sizeof(struct ethhdr);
+            parse_ipv6(ip_payload, remaining_bytes);
         }
 
         printf("------------------------------------------------------------\n");

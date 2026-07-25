@@ -27,14 +27,6 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
     printf("\n");
     printf("TCP\n");
     printf(" ├─ Header Length                : %u Bytes\n", tcp_header_len);
-    /*80  -> HTTP
-    443 -> HTTPS
-    22  -> SSH
-    21  -> FTP
-    25  -> SMTP
-    53  -> DNS
-    110 -> POP3
-    143 -> IMAP*/
     printf(" ├─ Source Port                  : ");
     switch(source_port){
         case 80: printf("HTTP\n"); break;
@@ -42,7 +34,7 @@ void parse_tcp(const unsigned char *ip_buffer, size_t iphdr_len, size_t remainin
         case 22: printf("SSH\n"); break;
         case 21: printf("FTP\n"); break;
         case 25: printf("SMTP\n"); break;
-        case 54: printf("DNS\n"); break;
+        case 53: printf("DNS\n"); break;
         case 110: printf("POP3\n"); break;
         case 143: printf("IMAP\n"); break;
         default: printf("%u\n", source_port); break;

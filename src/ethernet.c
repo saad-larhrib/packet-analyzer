@@ -19,7 +19,7 @@ unsigned short parse_ethernet(const struct ethhdr* eth){
     printf("\n");
 
     unsigned short ether_type = ntohs(eth->h_proto);
-    printf(" ├─ Protocol    : %s (0x%04X)\n", get_ethertype_name(eth->h_proto), ether_type);
+    printf(" ├─ Protocol    :  %s (0x%04X)\n", get_ethertype_name(eth->h_proto), ether_type);
 
     return ether_type;
 }

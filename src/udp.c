@@ -2,6 +2,8 @@
 
 #include "udp.h"
 #include "dns.h"
+#include "filter.h"
+
 #include <netinet/udp.h>
 #include <arpa/inet.h>
 #include <stdio.h>
@@ -34,8 +36,9 @@ void parse_udp(const unsigned char* ip_buffer, size_t iph_len, size_t remaining_
     if(src_port == 53|| dst_port == 53){
         const unsigned char* dns_pylod = ip_buffer + iph_len + sizeof(struct udphdr);
         size_t dsn_size = remaining_size - iph_len - sizeof(struct udphdr);
-
-        parse_dns(dns_pylod, dsn_size);
+        if (current_filter == FILTER_NONE || current_filter == FILTER_DNS){
+            parse_dns(dns_pylod, dsn_size);
+        }
     }
 
 }

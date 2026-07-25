@@ -3,6 +3,8 @@
 #include "tcp.h"
 #include "udp.h"
 #include "icmp.h"
+#include "filter.h"
+
 #include <linux/ip.h>
 #include <arpa/inet.h>
 #include <sys/types.h>
@@ -60,15 +62,21 @@ void parse_ipv4(const unsigned char* ip_buffer, size_t remaining_size) {
     printf(" ├─ Destination  : %s\n", dest_ip);
 
     if (iph->protocol == IPPROTO_TCP) {
-        parse_tcp(ip_buffer, iphdr_len, remaining_size);
+        if (current_filter == FILTER_NONE || current_filter == FILTER_TCP){
+            parse_tcp(ip_buffer, iphdr_len, remaining_size);
+        }
     }
     
     else if (iph->protocol == IPPROTO_UDP) {
-      parse_udp(ip_buffer, iphdr_len, remaining_size);  
+        if (current_filter == FILTER_NONE || current_filter == FILTER_UDP){
+            parse_udp(ip_buffer, iphdr_len, remaining_size);
+        }  
     }
 
     else if (iph->protocol == IPPROTO_ICMP) {
-        parse_icmp(ip_buffer, iphdr_len, remaining_size);
+        if (current_filter == FILTER_NONE || current_filter == FILTER_ICMP){
+            parse_icmp(ip_buffer, iphdr_len, remaining_size);
+            
+        }
     }
-
 }

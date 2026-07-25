@@ -9,7 +9,9 @@ SRC = src/main.c \
       src/tcp.c \
       src/udp.c \
       src/icmp.c \
-      src/dns.c
+      src/dns.c \
+      src/ipv6.c \
+      src/filter.c
 
 OBJ = $(SRC:.c=.o)
 
