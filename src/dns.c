@@ -35,12 +35,13 @@ void parse_dns(const unsigned char* dns_payload, size_t dns_size){
     const unsigned char *question = dns_payload + sizeof(dnshdr); 
     question = parse_question(question);
 
-    printf("  * Anwser                  : \n");
-    /*
+    const unsigned char* answer = question;
+
+    printf("  * Answer                  : \n");
+
     for (int i = 0; i < ntohs(dns->ancount); i++){
         answer = parse_answer(answer);
     }
-    */
 
     printf("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n");
 
@@ -81,9 +82,36 @@ const unsigned char *parse_question(const unsigned char *question){
     return question;
 }
 
-/*
+
 const unsigned char *parse_answer(const unsigned char *answer){
-    // Answer
-    question += 2;
+    uint16_t name = ntohs(*(uint16_t *)answer);
+    answer += 2;
+
+    uint16_t type = ntohs(*(uint16_t *)answer);
+    answer += 2;
+
+    uint16_t class = ntohs(*(uint16_t *)answer);
+    answer += 2;
+
+    uint32_t ttl = ntohl(*(uint32_t *)answer);
+    answer += 4;
+
+    uint16_t rd_len = ntohs(*(uint16_t *)answer);
+    answer += 2;
+
+    printf("      - NAME Pointer : 0x%04X\n", name);
+    printf("      - TYPE         : %u\n", type);
+    printf("      - CLASS        : %u\n", class);
+    printf("      - TTL          : %u\n", ttl);
+    printf("      - RDLENGTH     : %u\n", rd_len);
+
+    if (type == 1 && rd_len == 4) {
+        char ip[INET_ADDRSTRLEN];
+        inet_ntop(AF_INET, answer, ip, sizeof(ip));
+        printf("      - Address      : %s\n", ip);
+    }
+
+    answer += rd_len;
+
+    return answer;
 }
-*/
