@@ -1,3 +1,4 @@
+/*
 #include <stdio.h>
 #include <stdint.h>
 #include <arpa/inet.h>
@@ -34,6 +35,11 @@ void parse_arp(unsigned char ip_pyload, size_t remaining_size){
     uint8_t  p_leng = arp->protocol_len;
     uint16_t operat = arp->operation;
 
+    printf("ARP : \n");
+    printf("Harware type :")
+
     
 
 }
+
+*/
