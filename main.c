@@ -11,6 +11,7 @@
 #include "ethernet/ipv4/protocol.h"
 #include "ethernet/ipv4/ipv4.h"
 #include "ethernet/ipv6/ipv6.h"
+#include "ethernet/arp/arp.h"
 
 
 
@@ -58,6 +59,10 @@ int main(){
             const unsigned char* ip_payload = buffer + sizeof(struct ethhdr);
             size_t remaining_bytes = packet_size - sizeof(struct ethhdr);
             parse_ipv6(ip_payload, remaining_bytes);
+        }else if(ether_type == ETH_P_ARP){
+            const unsigned char* ip_pyload = buffer + sizeof(struct ethhdr);
+            size_t remaining_bytes = packet_size - sizeof(struct ethhdr);
+            parse_arp(ip_pyload, remaining_bytes);
         }
 
         printf("------------------------------------------------------------\n");

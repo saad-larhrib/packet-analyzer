@@ -1,5 +1,6 @@
 #include "ethernet.h"
 #include "ipv4/protocol.h"
+#include "arp/arp.h"
 #include <stdio.h>
 #include <arpa/inet.h>
 
